@@ -1,0 +1,20 @@
+This is a gdbm interface to Lua.
+
+gdbm is the GNU database manager, a replacement of the UNIX dbm library
+available at http://www.gnu.org/software/gdbm/gdbm.html .
+
+Lua is an extension language, available at http://www.lua.org/ .
+
+To install, edit Makefile to to reflect your installation of Lua (and possibly
+gdbm as well, if you're not running Linux).
+The run "make test".
+
+Here is a brief explanation of the files in this package:
+  gdbm.c          gdbm binding
+  gdbm.lua        OO interface for gdbm binding
+  main.c          Lua interpreter that loads gdbm binding (from Lua 4.0)
+  repository.lua  example
+  test.lua        test code
+
+This code is hereby placed in the public domain.
+Please send comments, suggestions and bug reports to lhf@tecgraf.puc-rio.br .
