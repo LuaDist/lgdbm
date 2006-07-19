@@ -1,37 +1,65 @@
-# makefile for Lua+gdbm
+# makefile for gdbm library for Lua
 
-# change this to reflect your installation
-LUA=/tmp/lhf/lua-4.0
+# change these to reflect your Lua installation
+LUA= /tmp/lhf/lua-5.0
+LUAINC= $(LUA)/include
+LUALIB= $(LUA)/lib
+LUABIN= $(LUA)/bin
 
-CC= gcc
-CFLAGS= $(INCS) $(DEFS) $(WARN) -O2 -g
-WARN= -ansi -pedantic -Wall #-Wmissing-prototypes
+# if your system already has gdbm, this should suffice
+GDBMLIB= -lgdbm
+# otherwise, change these to reflect your gdbm installation
+#GDBM= /tmp/lhf/gdbm-1.8.3
+#GDBMINC= -I$(GDBM)
+#GDBMLIB= -L$(GDBM)/.libs -lgdbm
+#GDBMLIB= $(GDBM)/.libs/libgdbm.a
 
-INCS= -I$(LUA)/include -I$(GDBM)
-LIBS= -L$(LUA)/lib -llua -llualib -lm -lgdbm
+# no need to change anything below here
+CFLAGS= $(INCS) $(WARN) -O2 $G
+WARN= -ansi -pedantic -Wall
+INCS= -I$(LUAINC) $(GDBMINC)
 
-OBJS= main.o gdbm.o
+MYNAME= gdbm
+MYLIB= l$(MYNAME)
+T= $(MYLIB).so
+OBJS= $(MYLIB).o
+TEST= test.lua
 
-T=gdbm
-
-all:	$T
-
-$T:	$(OBJS)
-	$(CC) -o $@ $(OBJS) $(LIBS)
+all:	test
 
 test:	$T
-	./gdbm test.lua
+	$(LUABIN)/lua -l$(MYNAME) $(TEST)
+
+o:	$(MYLIB).o
+
+so:	$T
+
+$T:	$(OBJS)
+	$(CC) -o $@ -shared $(OBJS) $(GDBMLIB)
 
 clean:
-	rm -f $T $(OBJS) test.gdbm core
+	rm -f $(OBJS) $T core core.* a.out test.gdbm
+
+doc:
+	@echo "$(MYNAME) library:"
+	@fgrep '/**' $(MYLIB).c | cut -f2 -d/ | tr -d '*' | sort | column
 
 # distribution
 
-A=gdbm.tar.gz
-TOTAR=Makefile,README,gdbm.c,gdbm.lua,main.c,repository.lua,test.lua
+FTP= $(HOME)/public/ftp/lua/5.0
+D= $(MYNAME)
+A= $(MYLIB).tar.gz
+TOTAR= Makefile,README,$(MYLIB).c,$(MYNAME).lua,test.lua
 
 tar:	clean
-	tar zcvf $A -C .. gdbm/{$(TOTAR)}
+	tar zcvf $A -C .. $D/{$(TOTAR)}
 
-distr:	tar 
-	mv $A ftp
+distr:	tar
+	touch -r $A .stamp
+	mv $A $(FTP)
+
+diff:	clean
+	tar zxf $(FTP)/$A
+	diff $D .
+
+# eof

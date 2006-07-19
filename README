@@ -1,20 +1,34 @@
-This is a gdbm interface to Lua.
+This is a gdbm interface for Lua 5.0. gdbm is the GNU database manager,
+a replacement of the UNIX dbm library available at
+	http://www.gnu.org/software/gdbm/
+If you're running Linux, you probably already have gdbm installed.
 
-gdbm is the GNU database manager, a replacement of the UNIX dbm library
-available at http://www.gnu.org/software/gdbm/gdbm.html .
+To try the library, just edit Makefile to reflect your installation of Lua and
+then run make. This will build the library and run a simple test. For detailed
+installation instructions, see
+	http://www.tecgraf.puc-rio.br/~lhf/ftp/lua/install.html
 
-Lua is an extension language, available at http://www.lua.org/ .
+There is no manual but the binding follows the gdbm interface closely and
+so is simple and intuitive; see the summary below and also "man gdbm". The
+binding allows object-oriented style of programming as in standard IO library
+for Lua. Read also test.lua, which shows the library in action.
 
-To install, edit Makefile to to reflect your installation of Lua (and possibly
-gdbm as well, if you're not running Linux).
-The run "make test".
-
-Here is a brief explanation of the files in this package:
-  gdbm.c          gdbm binding
-  gdbm.lua        OO interface for gdbm binding
-  main.c          Lua interpreter that loads gdbm binding (from Lua 4.0)
-  repository.lua  example
-  test.lua        test code
+The support code in gdbm.lua also provides gdbm.proxy, which creates table
+proxies for gdbm databases, and two "for" generators: "keys" and "entries",
+for convenient traversal of databases. Again, see test.lua for examples.
 
 This code is hereby placed in the public domain.
-Please send comments, suggestions and bug reports to lhf@tecgraf.puc-rio.br .
+Please send comments, suggestions, and bug reports to lhf@tecgraf.puc-rio.br .
+
+-------------------------------------------------------------------------------
+
+gdbm library:
+ close(file) 			 nextkey(file,key) 
+ delete(file,key) 		 open(file,how) 
+ exists(file,key) 		 reorganize(file) 
+ fdesc(file) 			 replace(file,key,data) 
+ fetch(file,key) 		 sync(file) 
+ firstkey(file) 		 tostring(file) 
+ insert(file,key,data) 		 version 
+
+-------------------------------------------------------------------------------
