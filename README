@@ -1,21 +1,19 @@
-This is a gdbm interface for Lua 5.0. gdbm is the GNU database manager,
+This is a gdbm interface for Lua 5.1. gdbm is the GNU database manager,
 a replacement of the UNIX dbm library available at
 	http://www.gnu.org/software/gdbm/
 If you're running Linux, you probably already have gdbm installed.
 
-To try the library, just edit Makefile to reflect your installation of Lua and
-then run make. This will build the library and run a simple test. For detailed
-installation instructions, see
+To try this Lua library, edit Makefile to reflect your installation of Lua
+and gdbm. Then run make. This will build the library and run a simple test.
+For detailed installation instructions, see
 	http://www.tecgraf.puc-rio.br/~lhf/ftp/lua/install.html
 
-There is no manual but the binding follows the gdbm interface closely and
-so is simple and intuitive; see the summary below and also "man gdbm". The
-binding allows object-oriented style of programming as in standard IO library
-for Lua. Read also test.lua, which shows the library in action.
+There is no manual but the library is simple and intuitive; see the summary
+below. Read also test.lua, which shows the library in action.
 
-The support code in gdbm.lua also provides gdbm.proxy, which creates table
-proxies for gdbm databases, and two "for" generators: "keys" and "entries",
-for convenient traversal of databases. Again, see test.lua for examples.
+test.lua also provides gdbm.proxy, which creates table proxies for gdbm
+databases, and two "for" generators: "keys" and "entries", for convenient
+traversal of databases.
 
 This code is hereby placed in the public domain.
 Please send comments, suggestions, and bug reports to lhf@tecgraf.puc-rio.br .
@@ -23,12 +21,12 @@ Please send comments, suggestions, and bug reports to lhf@tecgraf.puc-rio.br .
 -------------------------------------------------------------------------------
 
 gdbm library:
- close(file) 			 nextkey(file,key) 
- delete(file,key) 		 open(file,how) 
- exists(file,key) 		 reorganize(file) 
- fdesc(file) 			 replace(file,key,data) 
+ __tostring(file) 		 nextkey(file,key) 
+ close(file) 			 open(file,how) 
+ delete(file,key) 		 reorganize(file) 
+ exists(file,key) 		 replace(file,key,data) 
  fetch(file,key) 		 sync(file) 
- firstkey(file) 		 tostring(file) 
- insert(file,key,data) 		 version 
+ firstkey(file) 		 version 
+ insert(file,key,data) 
 
 -------------------------------------------------------------------------------
