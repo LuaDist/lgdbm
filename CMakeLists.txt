@@ -4,19 +4,16 @@
 # For details see the COPYRIGHT file distributed with LuaDist.
 # Please note that the package source code is licensed under its own license.
 
-PROJECT(lgdbm C)
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
-INCLUDE(dist.cmake)
+project ( lgdbm C )
+cmake_minimum_required ( VERSION 2.6 )
+include ( dist.cmake )
 
-# Find GDBM
-FIND_PACKAGE(GDBM REQUIRED)
-INCLUDE_DIRECTORIES(${GDBM_INCLUDE_DIRS})
+find_package ( GDBM REQUIRED )
+include_directories ( ${GDBM_INCLUDE_DIRS} )
 
-# Build
-ADD_LUA_MODULE(gdbm lgdbm.c)
-TARGET_LINK_LIBRARIES(gdbm ${GDBM_LIBRARIES})
+install_lua_module ( gdbm lgdbm.c )
+target_link_libraries ( gdbm ${GDBM_LIBRARIES} )
+install_data ( README )
+install_test ( test.lua )
 
-# Install all files and documentation
-INSTALL(TARGETS gdbm  DESTINATION ${INSTALL_CMOD})
-INSTALL(FILES README DESTINATION ${INSTALL_DATA})
-INSTALL(FILES test.lua DESTINATION ${INSTALL_TEST})
+add_lua_test ( test.lua )
