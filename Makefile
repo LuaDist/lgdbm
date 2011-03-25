@@ -19,6 +19,13 @@ GDBMLIB= -lgdbm
 #GDBMINC= -I$(GDBM)
 #GDBMLIB= $(GDBM)/.libs/libgdbm.a
 
+# if your system already has gdbm, this should suffice
+GDBMLIB= -lgdbm
+# otherwise, change these to reflect your gdbm installation
+GDBM= /tmp/lhf/gdbm-1.8.3
+GDBMINC= -I$(GDBM)
+GDBMLIB= $(GDBM)/.libs/libgdbm.a
+
 # probably no need to change anything below here
 CC= gcc
 CFLAGS= $(INCS) $(WARN) -O2 $G

@@ -1,0 +1,14 @@
+--- This file is part of LuaDist project
+
+name = "lgdbm"
+version = "5.1"
+
+desc = "A database library for Lua based on GNU dbm. GNU dbm is a set of database routines that use extensible hashing."
+url = "http://www.tecgraf.puc-rio.br/~lhf/ftp/lua/#lgdbm"
+license = "Public domain"
+maintainer = "Peter Kapec"
+
+depends = {
+	"lua ~> 5.1",
+	"libgdbm >=1.8"
+}

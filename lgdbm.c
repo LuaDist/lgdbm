@@ -2,7 +2,7 @@
 * lgdbm.c
 * gdbm interface for Lua 5.1
 * Luiz Henrique de Figueiredo <lhf@tecgraf.puc-rio.br>
-* 30 Oct 2010 00:02:05
+* 29 Apr 2010 23:07:40
 * This code is hereby placed in the public domain.
 */
 
@@ -16,8 +16,11 @@
 #include "lua.h"
 #include "lauxlib.h"
 
+#define lua_boxpointer(L,u) \
+	(*(void **)(lua_newuserdata(L, sizeof(void *))) = (u))
+
 #define MYNAME		"gdbm"
-#define MYVERSION	MYNAME " library for " LUA_VERSION " / Oct 2010 / \n"
+#define MYVERSION	MYNAME " library for " LUA_VERSION " / Apr 2010 / \n"
 #define MYTYPE		MYNAME " handle"
 
 static datum encode(lua_State *L, int i)
@@ -83,10 +86,9 @@ static GDBM_FILE Pget(lua_State *L, int i)
 static int Lopen(lua_State *L)			/** open(file,how) */
 {
  const char* file=luaL_checkstring(L,1);
- const char* how=luaL_optstring(L,2,"r");
+ const char* how=luaL_checkstring(L,2);
  int read_write;
  GDBM_FILE dbf;
- GDBM_FILE* p=lua_newuserdata(L,sizeof(GDBM_FILE));
  switch (how[0])
  {
   default:
@@ -106,7 +108,7 @@ static int Lopen(lua_State *L)			/** open(file,how) */
  }
  else
  {
-  *p=dbf;
+  lua_boxpointer(L,dbf);
   luaL_getmetatable(L,MYTYPE);
   lua_setmetatable(L,-2);
   return 1;

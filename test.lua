@@ -2,8 +2,7 @@
 
 require"gdbm"
 
--- support code --------------------------------------------------------------
-
+-- support code
 gdbm.version=string.gsub(gdbm.version,"\n.*version (.-). .*$","using GDBM %1")
 
 do
@@ -46,13 +45,12 @@ function testing(s)
  print("-------------------------------------------------------",s)
 end
 
-function gdbm.show(d)
+function show(d)
  local n=0
  for k,v in d:entries() do
   n=n+1
   print(n,k,v)
  end
- return d
 end
 
 ------------------------------------------------------------------------------
@@ -69,7 +67,7 @@ d:insert("MAR","March")
 d:insert("APR","April")
 d:insert("MAY","May")
 d:insert("JUN","June")
-d:show()
+show(d)
 
 ------------------------------------------------------------------------------
 testing"proxy insert"
@@ -80,7 +78,7 @@ t.SEP="September"
 t.OCT="October"
 t.NOV="November"
 t.DEC="December"
-d:show()
+show(d)
 
 ------------------------------------------------------------------------------
 testing"proxy delete"
@@ -90,15 +88,13 @@ t.MAR=nil
 t.APR=nil
 t.MAY=nil
 t.JUN=nil
-d:show()
+show(d)
 
---[[
-for i=1,1000 do t[i]=tostring(i) end
-os.execute("ls -l "..F.." ; md5sum "..F)
-for i=1,1000 do t[i]=nil end
-print("reorganize",d:reorganize())
-os.execute("ls -l "..F.." ; md5sum "..F)
---]]
+-- for i=1,1000 do t[i]=tostring(i) end
+-- os.execute("ls -l "..F.." ; md5sum "..F)
+-- for i=1,1000 do t[i]=nil end
+-- print("reorganize",d:reorganize())
+-- os.execute("ls -l "..F.." ; md5sum "..F)
 
 ------------------------------------------------------------------------------
 testing"return codes"
@@ -122,9 +118,7 @@ print("XXX is",d:fetch("XXX"))
 print("delete XXX",d:delete("XXX"))
 print("delete XXX",d:delete("XXX"))
 
-------------------------------------------------------------------------------
-testing"chaining"
-d:insert("FEB","Fevereiro"):delete("JUL"):replace("NOV","Novembro"):show():close()
+d:close()
 
 ------------------------------------------------------------------------------
 print""
