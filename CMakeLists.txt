@@ -6,7 +6,8 @@
 
 project ( lgdbm C )
 cmake_minimum_required ( VERSION 2.6 )
-include ( dist.cmake )
+include ( cmake/dist.cmake )
+include ( lua )
 
 find_package ( GDBM REQUIRED )
 include_directories ( ${GDBM_INCLUDE_DIRS} )
