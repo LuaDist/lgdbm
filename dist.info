@@ -7,6 +7,7 @@ desc = "A database library for Lua based on GNU dbm. GNU dbm is a set of databas
 url = "http://www.tecgraf.puc-rio.br/~lhf/ftp/lua/#lgdbm"
 license = "Public domain"
 maintainer = "Peter Kapec"
+author = "Luiz Henrique de Figueiredo"
 
 depends = {
 	"lua ~> 5.1",
